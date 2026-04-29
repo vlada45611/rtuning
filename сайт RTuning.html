@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTuning | Тюнинг автомобилей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #0d0d14 url('images/трак.jpg') no-repeat center center fixed;
+            background-size: cover;
+            backdrop-filter: blur(6px);
+            color: #1e1e2a;
+            padding-top: 80px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 18, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            z-index: 2000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+            border-bottom: 2px solid #ff5e1a;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #ff5e1a;
+            text-decoration: none;
+        }
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.3px;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #ff6a00;
+            transition: width 0.2s ease;
+        }
+        .nav-links a:hover {
+            color: #ff983d;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #ff6a0022;
+            padding: 5px 12px;
+            border-radius: 30px;
+            border: 1px solid #ff6a00;
+        }
+        .cart-link:hover { background: #ff6a0044; }
+
+        main { padding: 40px 0; }
+
+        h1, h2, h3 { color: #ff983d; font-weight: 700; letter-spacing: 0.5px; text-shadow: 2px 2px 4px #00000060; }
+        h2 { border-left: 6px solid #ff6a00; padding-left: 20px; margin: 40px 0 25px; }
+
+        .news-section, .services-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .news-card, .service-card {
+            background: #1e1e1e;
+            border-radius: 24px;
+            padding: 20px;
+            flex: 1 1 280px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+            transition: 0.2s;
+            backdrop-filter: blur(5px);
+        }
+        .news-card:hover, .service-card:hover { transform: translateY(-8px); border-color: #ff6a00; }
+
+        .news-card img, .service-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 18px;
+            border: 1px solid #ff6a00;
+            background: #2a2a2a;
+        }
+
+        .news-card p, .service-card p { color: #ccc; margin: 12px 0 8px; font-weight: 500; }
+        .news-card strong { color: #ff983d; font-size: 1.3rem; }
+
+        .services-section .service-card { flex: 1 1 200px; text-align: center; }
+        .service-card img { height: 140px; }
+
+        footer {
+            background: #0c0c0c;
+            border-top: 3px solid #ff6a00;
+            padding: 25px 0;
+            margin-top: 60px;
+            color: #aaa;
+            text-align: center;
+        }
+        .footer-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            gap: 40px 80px;
+            width: 100%;
+        }
+        .footer-item { text-align: center; }
+
+        .catalog-brands {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 25px 0 20px;
+        }
+        .brand-btn {
+            background: #2a2a2a;
+            color: white;
+            border: 1px solid #ff6a00;
+            padding: 12px 22px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 1rem;
+        }
+        .brand-btn:hover {
+            background: #ff6a00;
+            color: black;
+            transform: scale(0.97);
+            box-shadow: 0 0 15px #ff6a00;
+        }
+
+        .catalog-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+            justify-content: flex-start;
+        }
+        .catalog-item {
+            background: #fff;
+            color: #111;
+            border-radius: 28px;
+            padding: 18px 18px 20px;
+            flex: 1 1 220px;
+            max-width: 260px;
+            box-shadow: 0 12px 25px black;
+            border: 1px solid #ff983d;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .catalog-item:hover { transform: translateY(-6px); border-color: #ff6a00; }
+
+        .catalog-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 18px;
+            border: 2px solid #ff6a00;
+        }
+        .catalog-item h4 { margin: 12px 0 6px; color: #111; font-size: 1.2rem; }
+        .catalog-item .price { color: #d35400; font-weight: 800; font-size: 1.4rem; margin: 6px 0; }
+        .catalog-item .desc {
+            font-size: 0.9rem;
+            color: #222;
+            margin: 5px 0 12px;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+            flex-wrap: wrap;
+        }
+
+        .action-link.cart {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1 1 auto;
+            border-radius: 40px;
+            padding: 10px 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: 0.15s;
+            cursor: pointer;
+            border: none;
+            background: #ff6a00;
+            color: #111;
+            border: 1px solid #ff6a00;
+        }
+        .action-link.cart:hover {
+            background: #ff983d;
+            transform: scale(0.96);
+        }
+
+        .review-form {
+            background: #1e1e1e;
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid #ff6a00;
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: #ff983d; font-weight: 600; margin-bottom: 5px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: #2c2c2c;
+            border: 1px solid #555;
+            border-radius: 40px;
+            color: white;
+            font-size: 1rem;
+        }
+        .form-group textarea { border-radius: 25px; resize: vertical; }
+
+        .rating-area {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 15px;
+            font-size: 2rem;
+        }
+        .rating-area input { display: none; }
+        .rating-area label {
+            color: #555;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .rating-area label:hover,
+        .rating-area label:hover ~ label,
+        .rating-area input:checked ~ label {
+            color: #ffb347;
+        }
+
+        .review-submit-btn {
+            background: #ff6a00;
+            border: none;
+            color: black;
+            padding: 14px 35px;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 1.1rem;
+        }
+        .review-submit-btn:hover { background: #ff983d; transform: scale(0.97); }
+
+        .existing-reviews {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .review-item {
+            background: #252525;
+            border-radius: 25px;
+            padding: 20px;
+            border-left: 6px solid #ff6a00;
+            color: #eee;
+        }
+        .review-item .stars { color: #ffb347; font-size: 1.4rem; letter-spacing: 3px; }
+        .review-item .author { font-weight: 700; color: #ff983d; margin: 5px 0; }
+
+        .contacts-block {
+            background: #1f1f1f;
+            border-radius: 30px;
+            padding: 35px;
+            border: 1px solid #ff6a00;
+            max-width: 600px;
+            color: white;
+        }
+        .contacts-block p { margin: 15px 0; font-size: 1.2rem; }
+        .social-icons { display: flex; gap: 25px; margin-top: 25px; }
+        .social-icons a {
+            color: #ff983d;
+            text-decoration: none;
+            font-size: 1.8rem;
+            background: #2a2a2a;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid #ff6a00;
+            transition: 0.15s;
+        }
+        .social-icons a:hover { background: #ff6a00; color: black; transform: scale(1.08); }
+
+        .map-container {
+            margin-top: 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #ff6a00;
+        }
+        .map-container iframe {
+            display: block;
+            width: 100%;
+            height: 300px;
+            border: 0;
+        }
+
+        .cart-items {
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 30px;
+            border: 1px solid #ff6a00;
+        }
+        .cart-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
+            flex-wrap: wrap;
+        }
+        .cart-row img { width: 80px; height: 80px; border-radius: 20px; border: 2px solid #ff6a00; }
+        .cart-row .cart-item-title { flex: 2; font-weight: 600; color: white; }
+        .cart-row .cart-price { font-weight: 800; color: #ff983d; }
+        .cart-row .cart-remove {
+            background: #992222;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .cart-row .cart-remove:hover { background: #cc2e2e; transform: scale(0.95); }
+
+        .cart-total {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff983d;
+            margin: 30px 0 20px;
+            text-align: right;
+        }
+        .payment-methods {
+            display: flex;
+            gap: 20px;
+            background: #2a2a2a;
+            border-radius: 60px;
+            padding: 18px 30px;
+            justify-content: center;
+            border: 1px solid #ff6a00;
+        }
+        .payment-methods span { font-size: 1.2rem; background: #111; padding: 10px 25px; border-radius: 40px; border: 1px dashed #ff6a00; color: white; }
+
+        .page-section { display: none; }
+        .page-section:target { display: block; }
+        #main-page { display: block; }
+        body:has(#catalog:target) #main-page { display: none; }
+        body:has(#reviews:target) #main-page { display: none; }
+        body:has(#contacts:target) #main-page { display: none; }
+        body:has(#cart:target) #main-page { display: none; }
+
+        #catalog:target, #reviews:target, #contacts:target, #cart:target { display: block; }
+
+        .btn, button { cursor: pointer; }
+
+        .brand-btn {
+            display: none;
+        }
+        .brand-label {
+            background: #2a2a2a;
+            color: white;
+            border: 1px solid #ff6a00;
+            padding: 12px 22px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 1rem;
+            display: inline-block;
+        }
+        .brand-label:hover {
+            background: #ff6a00;
+            color: black;
+            transform: scale(0.97);
+            box-shadow: 0 0 15px #ff6a00;
+        }
+        .brand-radio {
+            display: none;
+        }
+        .catalog-grid .catalog-item {
+            display: flex;
+        }
+        #brand-bmw:checked ~ #catalog .catalog-grid .catalog-item,
+        #brand-audi:checked ~ #catalog .catalog-grid .catalog-item,
+        #brand-merc:checked ~ #catalog .catalog-grid .catalog-item,
+        #brand-toyota:checked ~ #catalog .catalog-grid .catalog-item,
+        #brand-nissan:checked ~ #catalog .catalog-grid .catalog-item,
+        #brand-ford:checked ~ #catalog .catalog-grid .catalog-item,
+        #brand-honda:checked ~ #catalog .catalog-grid .catalog-item {
+            display: none;
+        }
+        #brand-bmw:checked ~ #catalog .catalog-grid .catalog-item:nth-child(-n+5) { display: flex; }
+        #brand-audi:checked ~ #catalog .catalog-grid .catalog-item:nth-child(n+6):nth-child(-n+10) { display: flex; }
+        #brand-merc:checked ~ #catalog .catalog-grid .catalog-item:nth-child(n+11):nth-child(-n+15) { display: flex; }
+        #brand-toyota:checked ~ #catalog .catalog-grid .catalog-item:nth-child(-n+5) { display: flex; }
+        #brand-nissan:checked ~ #catalog .catalog-grid .catalog-item:nth-child(n+6):nth-child(-n+10) { display: flex; }
+        #brand-ford:checked ~ #catalog .catalog-grid .catalog-item:nth-child(n+11):nth-child(-n+15) { display: flex; }
+        #brand-honda:checked ~ #catalog .catalog-grid .catalog-item:nth-child(-n+5) { display: flex; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-inner">
+            <div class="logo">
+                <img src="images/logo.jpg" alt="RTuning logo">
+            </div>
+            <nav class="nav-links">
+                <a href="#main-page">Главная</a>
+                <a href="#catalog">Каталог</a>
+                <a href="#reviews">Отзывы</a>
+                <a href="#contacts">Контакты</a>
+                <a href="#cart" class="cart-link">🛒 Корзина</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <input type="radio" name="brand" id="brand-bmw" class="brand-radio" checked>
+        <input type="radio" name="brand" id="brand-audi" class="brand-radio">
+        <input type="radio" name="brand" id="brand-merc" class="brand-radio">
+        <input type="radio" name="brand" id="brand-toyota" class="brand-radio">
+        <input type="radio" name="brand" id="brand-nissan" class="brand-radio">
+        <input type="radio" name="brand" id="brand-ford" class="brand-radio">
+        <input type="radio" name="brand" id="brand-honda" class="brand-radio">
+        <section id="main-page" class="page-section">
+            <h2>Новости и акции</h2>
+            <div class="news-section">
+                <div class="news-card"><img src="images/выхлоп.jpg"><p><strong>Новинка:</strong> Спортивные выхлопные системы В наличии титановые выхлопные системы. Уникальный звук и снижение веса!</p></div>
+                <div class="news-card"><img src="images/карбон.jpg"><p><strong>Поступление карбоновых обвесов:</strong> Новые карбоновые обвесы. Легкость и агрессивный стиль!</p></div>
+                <div class="news-card"><img src="images/акцйя.jpg"><p><strong>Акция на чип-тюнинг:</strong> Только в марте скидка 20% на прошивку. Запишитесь сейчас!</p></div>
+            </div>
+            <h2>Услуги</h2>
+            <div class="services-section">
+                <div class="service-card"><img src="images/система.jpg"><p>Выхлопные системы</p></div>
+                <div class="service-card"><img src="images/чип.jpg"><p>Чип-тюнинг</p></div>
+                <div class="service-card"><img src="images/подвеска.jpg"><p>Подвеска</p></div>
+            </div>
+        </section>
+        <section id="catalog" class="page-section">
+            <h2>Выберите марку</h2>
+            <div class="catalog-brands">
+                <label for="brand-bmw" class="brand-label">BMW</label>
+                <label for="brand-audi" class="brand-label">Audi</label>
+                <label for="brand-merc" class="brand-label">Mercedes</label>
+                <label for="brand-toyota" class="brand-label">Toyota</label>
+                <label for="brand-nissan" class="brand-label">Nissan</label>
+                <label for="brand-ford" class="brand-label">Ford</label>
+                <label for="brand-honda" class="brand-label">Honda</label>
+                <span class="brand-btn">BMW</span><span class="brand-btn">Audi</span><span class="brand-btn">Mercedes</span><span class="brand-btn">Toyota</span><span class="brand-btn">Nissan</span><span class="brand-btn">Ford</span><span class="brand-btn">Honda</span>
+            </div>
+            <div class="catalog-grid">
+                <div class="catalog-item"><img src="images1/1.jpg"><h4>Чип-тюнинг Stage 1</h4><div class="price">₽29 000</div><div class="desc">Увеличение мощности до +25%, оптимизация расхода. Для большинства турбо-моторов. Прошивка под ваш стиль.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/2.jpg"><h4>Спортивный глушитель</h4><div class="price">₽18 500</div><div class="desc">Нержавейка, агрессивный звук, прирост мощности. Прямоточный, диаметр 76мм.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/3.jpg"><h4>Кованые диски R18</h4><div class="price">₽62 200</div><div class="desc">Легкосплавные, комплект 4 шт. Уникальный дизайн, цвет матовый графит.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/4.jpg"><h4>Спортивная подвеска</h4><div class="price">₽44 990</div><div class="desc">Комплект амортизаторов + пружины, занижение 35мм. Регулировка жесткости.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/5.jpg"><h4>Обвес Caractere</h4><div class="price">₽87 000</div><div class="desc">Передний бампер, накладки на пороги. Стеклопластик, грунт. Под покраску.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/6.jpg"><h4>Шумоизоляция полный салон</h4><div class="price">₽39 800</div><div class="desc">Комплексная вибро- и шумоизоляция. Материалы STP, максимум тишины.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/7.jpg"><h4>Акустика Morel</h4><div class="price">₽29 200</div><div class="desc">Комплект компонентной акустики + усилитель. 6.5", 100 Вт, установка в заводские места.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/8.jpg"><h4>Тюнинг руля (карбон)</h4><div class="price">₽12 500</div><div class="desc">Перетяжка алькантарой + карбоновая накладка. С подогревом (опционально).</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/9.jpg"><h4>Чип-тюнинг Stage 2</h4><div class="price">₽49 990</div><div class="desc">+40% мощности, агрессивный отклик на газ. Только для турбированных двигателей.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/10.jpg"><h4>Выхлопная система Akrapovic</h4><div class="price">₽125 500</div><div class="desc">Титановый глушитель, карбоновые насадки.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/11.jpg"><h4>Кованые диски R19</h4><div class="price">₽89 000</div><div class="desc">Облегчённые, дизайн BBS. PCD 5x120, ET30.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/12.jpg"><h4>Занижающие пружины H&R</h4><div class="price">₽22 200</div><div class="desc">Занижение 30-40 мм, улучшение управляемости. </div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/13.jpg"><h4>Карбоновый капот</h4><div class="price">₽67 300</div><div class="desc">Вес 5 кг, агрессивный дизайн. </div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/14.jpg"><h4>Шумоизоляция дверей</h4><div class="price">₽12 400</div><div class="desc">3 слоя, вибро- и теплоизоляция. Комплект на 2 двери.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+                <div class="catalog-item"><img src="images1/15.jpg"><h4>Спортивные кресла</h4><div class="price">₽75 950</div><div class="desc">Ковшеобразные, с интегрированными ремнями. Каркасные, обивка алькантара.</div><div class="item-actions"><a href="#catalog" class="action-link cart">В корзину</a></div></div>
+            </div>
+        </section>
+        <section id="reviews" class="page-section">
+            <h2>Оставить отзыв</h2>
+            <div class="review-form">
+                <div class="form-group"><label>Имя</label><input type="text" placeholder="Ваше имя"></div>
+                <div class="form-group"><label>Оценка</label>
+                    <div class="rating-area">
+                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                    </div>
+                </div>
+                <div class="form-group"><label>Отзыв</label><textarea rows="3" placeholder="Поделитесь впечатлениями..."></textarea></div>
+                <button class="review-submit-btn">Отправить</button>
+            </div>
+            <h2>Отзывы клиентов</h2>
+            <div class="existing-reviews">
+                <div class="review-item"><div class="stars">★★★★★</div><div class="author">Дмитрий</div><p>Отличный тюнинг ателье, сделали подвеску идеально.</p></div>
+                <div class="review-item"><div class="stars">★★★★☆</div><div class="author">Светлана</div><p>Поставили обвес, немного затянули сроки, но качество супер.</p></div>
+                <div class="review-item"><div class="stars">★★★★★</div><div class="author">Максим</div><p>Чип-тюнинг — машина летает! Спасибо RTuning</p></div>
+                <div class="review-item"><div class="stars">★★★★★</div><div class="author">Игорь</div><p>Привез турбину, подобрали пайпинг, всё четко.</p></div>
+            </div>
+        </section>
+        <section id="contacts" class="page-section">
+            <h2>Контакты</h2>
+            <div class="contacts-block">
+                <p>Адрес: г. Черемхово ул. Декабрьских событий 4</p>
+                <p>Телефон: +7 (902) 760-63-33</p>
+                <p>Email: vladasafronova@gmail.com</p>
+                <div class="map-container">
+                    <iframe 
+                        src="https://yandex.ru/map-widget/v1/?ll=103.066666%2C52.983333&z=17&pt=103.066666%2C52.983333&mode=search&text=Черемхово%2C%20ул.%20Декабрьских%20событий%204"
+                        allowfullscreen="true">
+                    </iframe>
+                </div>
+                <div class="social-icons">
+                    <a href="https://vk.ru/vladik_raft">vk</a> 
+                    <a href="https://t.me/@variflos_s">tg</a>
+                    <a href="https://max.ru/u/f9LHodD0cOID5rARPuOwzu2ymsvnuqBC9sgNkP9lPDVc8EqcPQIL6IQxEbY">max</a>
+                </div>
+            </div>
+        </section>
+        <section id="cart" class="page-section">
+            <h2>Корзина</h2>
+            <div class="cart-items">
+                <div class="cart-row"><img src="images1/3.jpg"><span class="cart-item-title">Кованые диски R18</span><span class="cart-price">₽62 200</span><button class="cart-remove">Удалить</button></div>
+                <div class="cart-row"><img src="images1/8.jpg"><span class="cart-item-title">Тюнинг руля (карбон)</span><span class="cart-price">₽12 500</span><button class="cart-remove">Удалить</button></div>
+                <div class="cart-total">Итого: ₽74 700</div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-item">RTuning — прокачай свою поездку!</div>
+                <div class="footer-item">График работы: Пн/Сб 09:00–23:00, Вс — выходной</div>
+                <div class="footer-item">2ИС-24 Сафронова Владислава</div>
+                <div class="footer-item">© 2026, все права защищены</div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
